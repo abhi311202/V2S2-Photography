@@ -1,10 +1,11 @@
+require('dotenv').config();
 var express = require("express");
 var app = express();
 var port = 3000;
 
 const path = require("path");
 const bodyParser = require("body-parser");
-
+const dburi = process.env.MONGODB_URI
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // app.use(express.static(path.join(__dirname, "/assets")));
@@ -21,7 +22,7 @@ app.use('/Media', express.static(__dirname + '/Media'));
 // connect to db
 
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://0.0.0.0:27017/viraj");
+mongoose.connect(dburi);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "Error connecting to MongoDB"));
 db.once("open", function () {
